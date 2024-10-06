@@ -82,7 +82,6 @@ int main(void) {
         srand(time(0));
         init_random_float(Figura, N);
 
-        // CPU Calculation
         #ifdef CPU_TIME
         struct timeval start_cpu_time = start_timer();
         #endif
@@ -106,7 +105,6 @@ int main(void) {
             return 1;
         }
 
-        // GPU Calculation
         #ifdef KERNEL_TRANSFER_TIME
         struct timeval start_kernel_transfer_time = start_timer();
         #endif
@@ -134,12 +132,12 @@ int main(void) {
         double stop_timer_KERNEL_TRANS = stop_timer(start_kernel_transfer_time, "Czas dla Kernela z transferem");
         #endif
 
-        // compare_cpu_with_gpu(cpu_tab, Figura);
+        compare_cpu_with_gpu(cpu_tab, Figura);
 
         double transfer_time = stop_timer_KERNEL_TRANS - stop_timer_KERNEL;
         double transfer_cost_percentage = (transfer_time / stop_timer_KERNEL_TRANS) * 100;
 
-        printf("Procentowy koszt transferu do i z wektora  %d elementow: %.2f%%\n", N, transfer_cost_percentage);
+        printf("------[PROCENTOWY KOSZT TRANSFERU] ------ \n \t %d elementow: %.2f%%\n ------------------------", N, transfer_cost_percentage);
 
 
         cudaFree(d_W);
